@@ -13,11 +13,14 @@ class Search extends React.Component {
             'https://api.github.com/search/users', 
             `q=${query}&sort=stars&order=desc`
         ).then((res) => {
-            console.log(res.items);
             this.setState({users: res.items});
         }).catch((err) => {
             this.setState({error: err.message});
         })
+    }
+
+    goToUserLink(link) {
+        window.location.href = link;
     }
 
     render() {
@@ -33,7 +36,10 @@ class Search extends React.Component {
                 <div className="users">
                     {this.state.users.slice(0, 10).map((user) => {
                         return (
-                            <div className="user">
+                            <div 
+                                className="user"
+                                onClick={() => this.goToUserLink(user.html_url)}
+                            >
                                 <img src={user.avatar_url} alt="avatar" />
                                 <div className="user-content">
                                     <h2>{user.login}</h2>
